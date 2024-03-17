@@ -41,10 +41,41 @@ if [ "$1" = "--help" ]; then
     if [ "$2" = "-h" ]; then
         echo "Usage: lab4.sh [option]"
         echo "Options:"
-        echo "  --date		            Display current date"
-        echo "  --logs		            Create 100 numbered log files"
+        echo "  --date -d	            Display current date"
+        echo "  --logs -l	            Create 100 numbered log files"
         echo "  --logs <number_of_files>    Create specified number of log files"
-        echo "  --help	                    Display this help message"
+        echo "  --help -h                   Display this help message"
+        echo "  --init	                    Clone repository to directory 'repository'"
+        echo "  --error	                    Create 100 numbered error directories with numbered error files"
+        echo "  -e               	    Create 100 numbered error directories with numbered error files"
+        echo "  --error <number_of_files>   Create specified number of log files"
+        echo "  -e <number_of_files>   	    Create specified number of log files"
     fi
 fi
 
+if [ "$1" = "--init" ]; then
+
+    script_path=$(realpath "$0")
+    work_dir=$(pwd)
+    clone_dir="$work_dir/repository"
+    
+    git clone https://github.com/KamilStasiewicz00/Narzedziapracy-Lab4.git "$clone_dir"
+    
+    echo "export PATH=\"$clone_dir:\$PATH\"" >> ~/.bashrc
+    source ~/.bashrc  # Zastosuj zmiany bez potrzeby wylogowywania się i ponownego logowania
+fi
+
+if [ "$1" = "--error" ] || [ "$1" = "-e" ]; then
+    if [ -z "$2" ]; then
+        num_files=100
+    else
+        num_files="$2"
+    fi
+
+    for ((i=1; i<=$num_files; i++))
+    do
+        error_dir="error$i"
+        mkdir -p "$error_dir"
+        echo "Error file" > "$error_dir/error$i.txt"
+    done
+fi
