@@ -36,3 +36,13 @@ if [ "$1" = "--logs" ]; then
     done
 fi
 
+if [ "$1" = "--help" ]; then
+    echo "Usage: lab4.sh [option]"
+    echo "Options:"
+    echo "  --date		        Display current date"
+    echo "  --logs		        Create 100 numbered log files"
+    echo "  --logs <number_of_files>    Create specified number of log files"
+    echo "  --help                      Display this help message"
+
+fi
+
